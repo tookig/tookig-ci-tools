@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH.'third_party/tokig_tools/helpers/ajax_traits.php');
+require_once(APPPATH.'third_party/tookig-ci-tools/helpers/ajax_traits.php');
 
 class Itemlist {
   use AjaxTrait;

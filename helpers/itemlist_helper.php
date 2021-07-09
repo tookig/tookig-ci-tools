@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once(APPPATH.'third_party/tokig_tools/helpers/ajax_traits.php');
+require_once(APPPATH.'third_party/tookig-ci-tools/helpers/ajax_traits.php');
 
 if (!trait_exists('ItemListControllerTrait')) {
   trait ItemListControllerTrait {
