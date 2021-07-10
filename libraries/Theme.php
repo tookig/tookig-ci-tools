@@ -12,8 +12,7 @@ class Theme {
    */
   public function __construct($config = []) {
     // Save parameters
-    $this->theme_view = isset($config['theme_view']) ? $config['theme_view'] : '';
-    $this->theme_vars = isset($config['theme_vars']) ? $config['theme_vars'] : [];
+    $this->set_theme(isset($config['theme_view']) ? $config['theme_view'] : '', isset($config['theme_vars']) ? $config['theme_vars'] : []);
   }
 
   /**
@@ -22,6 +21,11 @@ class Theme {
   public function __get($var) {
 		return get_instance()->$var;
 	}
+
+  public function set_theme($view, $vars = []) {
+    $this->theme_view = $view;
+    $this->theme_vars = $vars;
+  }
 
   /**
    * Add a partial view to the theme
