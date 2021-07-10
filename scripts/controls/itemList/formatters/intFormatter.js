@@ -1,4 +1,4 @@
-/* global $ */
+/* global */
 
 // Make sure there is a controls object
 var controls = controls || {}; // eslint-disable-line
@@ -15,7 +15,7 @@ controls.itemListFormatters = controls.itemListFormatters || {}
       max: undefined
     }, args)
     // Create formatter object
-    let obj = controls.itemListFormatters.textFormatter(iargs)
+    const obj = controls.itemListFormatters.textFormatter(iargs)
     obj.input = inputOverride(obj.input)
     return obj
   }

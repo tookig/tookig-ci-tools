@@ -41,7 +41,7 @@ controls.itemListFormatters = controls.itemListFormatters || {}
       $('<span/>').text(this.args.uppercase ? item.toLocaleUpperCase() : item).addClass('item-list-text-renderer-value')
     ).append(
       $('<span/>').text(this.args.suffix).addClass('item-list-text-renderer-suffix')
-    ).get(0)
+    )
   }
 
   /**
@@ -59,7 +59,7 @@ controls.itemListFormatters = controls.itemListFormatters || {}
       $('<input></input>').attr('type', 'text').val(text || '')
     ).append(
       $('<span/>').text(this.args.suffix)
-    ).get(0)
+    )
   }
 
   /**
