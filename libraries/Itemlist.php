@@ -70,7 +70,9 @@ class Itemlist {
       if ($field['name'] !== $list_instance->identity_field) {
         $validation .= '|required';
       }
-      $this->flex_validation->set_rules($field['name'], $field['description'], $validation);
+      if ($this->should_read_field($list_instance, $field)) {
+        $this->flex_validation->set_rules($field['name'], $field['description'], $validation);
+      }
     }
     // Validate
     if (!$this->flex_validation->run()) {
@@ -79,10 +81,12 @@ class Itemlist {
     // Get data and create add/update object
     $update = [];
     foreach ($list_instance->fields as $field) {
-      $update[$field['name']] = $this->flex_validation->value($field['name'])?:false;
+      if ($this->should_read_field($list_instance, $field)) {
+        $update[$field['name']] = $this->flex_validation->value($field['name'])?:false;
+      }
     }
     // Run dataset
-    if ($update[$list_instance->identity_field] === false) {
+    if (isset($update[$list_instance->identity_field]) && ($update[$list_instance->identity_field] === false)) {
       $update[$list_instance->identity_field] = $list_instance->add($update);
     } else {
       $list_instance->update($update);
@@ -114,7 +118,7 @@ class Itemlist {
       $this->_add_errors($this->flex_validation->error_array())->_fail(self::BAD_REQUEST);
     }
     // Delete
-    $list_instance->delete((object)[$identity['name'] => $this->flex_validation->value($identity['name'])]);
+    $list_instance->delete([$identity['name'] => $this->flex_validation->value($identity['name'])]);
     // Return
     $this->_success();
   }
@@ -198,5 +202,9 @@ class Itemlist {
     $params['sortOrder'] = $this->flex_validation->value('sortOrder') ?: 'asc';
     $params['search'] = $this->flex_validation->value('search') ?: false;
     return $params;
+  }
+
+  protected function should_read_field($list_instance, $field) {
+    return ($field['name'] === $list_instance->identity_field) || ($field['is_readonly'] !== true);
   }
 }

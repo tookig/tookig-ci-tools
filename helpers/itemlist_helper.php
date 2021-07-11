@@ -99,13 +99,16 @@ if (!class_exists('ItemlistDefaultInstance')) {
      * @param mixed $id - Identity of item to get
     */ 
     function get($id) {
+      foreach ($this->fields as $field) {
+        $this->db->select($field['name']);
+      }
       return $this->db->where($this->identity_field, $id)->get($this->table)->row();
     }
 
     /**
      * Add an item to the database
      * 
-     * @param Object $item - Item to add
+     * @param Array $item - Item to add
      */
     function add($item) {
       $this->db->insert($this->table, $item);
@@ -115,25 +118,19 @@ if (!class_exists('ItemlistDefaultInstance')) {
     /**
      * Update an item
      * 
-     * @param Object $item - Item to update
+     * @param Array $item - Item to update
      */
     function update($item) {
-      if (is_array($item)) {
-        $item = (object)$item;
-      }
-      $this->db->where($this->identity_field, $item->{$this->identity_field})->set($item)->update($this->table);
+      $this->db->where($this->identity_field, $item[$this->identity_field])->set($item)->update($this->table);
     }
 
     /**
      * Delete an item
      * 
-     * @param Object $item - Item to delete
+     * @param Array $item - Item to delete
      */
     function delete($item) {
-      if (is_array($item)) {
-        $item = (object)$item;
-      }
-      $this->db->where($this->identity_field, $item->{$this->identity_field})->delete($this->table);
+      $this->db->where($this->identity_field, $item[$this->identity_field])->delete($this->table);
     }
 
     /**
@@ -146,6 +143,9 @@ if (!class_exists('ItemlistDefaultInstance')) {
     public function get_list_items($filters) {
       // Get from table
       $this->db->from($this->table);
+      foreach ($this->fields as $field) {
+        $this->db->select($field['name']);
+      }
       $this->apply_standard_filter($filters);
       // Get data from database
       $data = $this->db->get()->result();
