@@ -21,7 +21,7 @@ controls.itemListFormatters = controls.itemListFormatters || {}
       options: []
     }, args)
     // Create formatter object
-    let obj = Object.assign(controls.itemListFormatters.formatter(iargs), {
+    const obj = Object.assign(controls.itemListFormatters.formatter(iargs), {
       input: input,
       parse: parse,
       render: render
@@ -62,7 +62,7 @@ controls.itemListFormatters = controls.itemListFormatters || {}
       return this.render(items)
     }
 
-    let select = $('<select/>').prop('multiple', this.args.multiselectable)
+    const select = $('<select/>').prop('multiple', this.args.multiselectable)
     Promise.resolve(this.args.options).then(function (options) {
       if (Array.isArray(options)) {
         options.forEach(function (option) {
