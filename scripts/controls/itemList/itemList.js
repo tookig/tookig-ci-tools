@@ -176,7 +176,7 @@ var controls = controls || {}; // eslint-disable-line
   }
 
   function updatePagination (total) {
-    const td = $('.item-list-pagination td').first().empty()
+    const td = this.element.find('.item-list-pagination td').first().empty()
     const pages = Math.ceil(total / this.args.pagination.maxCount)
     const current = Math.floor(Math.min(this.args.pagination.startIndex, total) / this.args.pagination.maxCount) + 1
     const starti = current - 3 < 1 ? 1 : current - 3
