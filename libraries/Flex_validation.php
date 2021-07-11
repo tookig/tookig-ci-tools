@@ -37,6 +37,8 @@ class Flex_validation extends CI_Form_validation {
     if (!isset($this->_field_data[$field])) {
       throw new Exception('Invalid field rule');
     }
+    // Strip field name of any array indicators
+    sscanf($field, '%[^[][', $field);
     // Save the field value to validate later
     $this->pre_check_values[$field] = $this->get_field($field);
     // Set the new validation data array
