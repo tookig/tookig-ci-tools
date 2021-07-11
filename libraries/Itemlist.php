@@ -88,7 +88,7 @@ class Itemlist {
       $list_instance->update($update);
     }
     // Return
-    $this->_success(['item' => $list_instance->get($update)]);
+    $this->_success(['item' => $list_instance->get($update[$list_instance->identity_field])]);
   }
 
   function delete($list_instance) {

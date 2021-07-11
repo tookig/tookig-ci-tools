@@ -32,6 +32,12 @@ if (!class_exists('ItemlistDefaultInstance')) {
   class ItemlistDefaultInstance {
     use AjaxTrait;
 
+    const SUCCESS = 200;
+    const BAD_REQUEST = 400;
+    const UNAUTHORIZED = 401;
+    const FORBIDDEN = 403;
+    const INTERNAL = 500;
+
     public $name;
     public $table;
     public $identity_field;
@@ -90,13 +96,10 @@ if (!class_exists('ItemlistDefaultInstance')) {
     /**
      * Get items from database
      * 
-     * @param mixed|mixed[] $ids - A single identity to get just one, or an array of identities to get many items
-     */
-    function get($ids) {
-      if (is_array($ids)) {
-        return $this->db->where_in($this->identity_field, $ids)->get($this->table)->row();
-      }
-      return $this->db->where($this->identity_field, $ids)->get($this->table)->row();
+     * @param mixed $id - Identity of item to get
+    */ 
+    function get($id) {
+      return $this->db->where($this->identity_field, $id)->get($this->table)->row();
     }
 
     /**
