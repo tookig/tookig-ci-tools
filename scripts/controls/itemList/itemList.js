@@ -173,6 +173,11 @@ var controls = controls || {}; // eslint-disable-line
       }
       tr.find('td[data-name=\'' + column.name + '\']').empty().append(rendered)
     })
+    const iRefItem = this._itemDOMObjectReferences.find(iRef => iRef.iid === parseInt(tr.attr('data-iid'), 10))
+    if (iRefItem) {
+      console.log('Update iRef', iRefItem)
+      iRefItem.item = item
+    }
   }
 
   function updatePagination (total) {
@@ -247,7 +252,7 @@ var controls = controls || {}; // eslint-disable-line
   }
 
   function editCallback (item, tr) {
-    return function () {
+    return () => {
       this.args.columns.forEach(function (column) {
         let rendered = ''
         if (column.formatter) {
@@ -262,7 +267,7 @@ var controls = controls || {}; // eslint-disable-line
       )
       tr.find('.item-edit-button').show()
       tr.addClass('item-list-editing').parents('.item-list-control').first().addClass('item-list-editing')
-    }.bind(this)
+    }
   }
 
   function deleteCallback (item) {
@@ -277,10 +282,10 @@ var controls = controls || {}; // eslint-disable-line
   }
 
   function saveCallback (tr, item) {
-    return function () {
+    return () => {
       const newData = {}
       try {
-        this.args.columns.forEach(function (column) {
+        this.args.columns.forEach(column => {
           if (!column.formatter) return
           const val = column.formatter.parse(tr.find('td[data-name=\'' + column.name + '\']').children().first())
           if (val !== undefined) {
@@ -291,24 +296,20 @@ var controls = controls || {}; // eslint-disable-line
         showError(error)
         return
       }
-      Promise.resolve((typeof this.args.save === 'function') ? this.args.save(newData) : true).then(function (success) {
-        if (success) {
-          cancelEditCallback.call(this, tr, item)()
-          this.load()
+      Promise.resolve((typeof this.args.save === 'function') ? this.args.save(newData) : true).then(data => {
+        if (data.success) {
+          cancelEditCallback.call(this, tr, data.item)()
         }
-      }.bind(this))
-    }.bind(this)
+      })
+    }
   }
 
   function cancelEditCallback (tr, item) {
     return function () {
-      if (tr.hasClass('item-list-new-row')) {
-        tr.remove()
-      } else {
-        tr.find('.item-edit-button').remove()
-        this.update(tr, item)
-      }
+      tr.removeClass('item-list-new-row')
+      tr.find('.item-edit-button').remove()
       tr.removeClass('item-list-editing')
+      this.update(tr, item)
       this.element.removeClass('item-list-editing')
     }.bind(this)
   }

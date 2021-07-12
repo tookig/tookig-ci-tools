@@ -125,11 +125,17 @@
  .item-list-control .item-list-edit-item,
  .item-list-control .item-list-delete-item {
    margin-right: 1px;
-   display: none;
+   visibility: hidden;
+   display: inline-block;
    cursor: pointer;
  }
 
  .item-list-control:not(.item-list-editing) .item-list-items tr:hover td.item-list-action-cell .item-list-edit-item,
   .item-list-control:not(.item-list-editing) .item-list-items tr:hover td.item-list-action-cell .item-list-delete-item {
-   display: inline-block;
+    visibility: visible;
+ }
+
+ .item-list-control tr.item-list-editing .item-list-edit-item,
+ .item-list-control tr.item-list-editing .item-list-delete-item {
+  display: none;
  }
