@@ -1,0 +1,209 @@
+.dialog-table {
+     border-collapse:        separate;
+     border-spacing:         0px;
+     margin:                 10px;
+
+     font-family:            Arial;
+     font-size:              10pt;
+ }
+
+.dialog-table tbody:not(:first-of-type)::before {
+  content: '';
+  display: block;
+  height: 15px;
+}
+
+ .dialog-table th,
+ .dialog-table td {
+     border-width:           1px 0px 0px 1px;
+     border-color:           #bbbbbb;
+     border-style:           solid;
+     padding:                5px;
+ }
+
+ .dialog-table td {
+     vertical-align:         top;
+     background-color:       white;
+ }
+
+ .dialog-table th {
+     background-color:       #f6f6f6;
+ }
+
+ .dialog-table th:last-child,
+ .dialog-table td:last-child {
+     border-right-width:     1px;
+ }
+
+ .dialog-table tr:first-child th:first-child,
+ .dialog-table tr:first-child td:first-child {
+     border-top-left-radius:     4px;
+ }
+
+ .dialog-table tr:first-child th:last-child,
+ .dialog-table tr:first-child td:last-child {
+     border-top-right-radius:    4px;
+ }
+
+ .dialog-table tbody tr:last-child td,
+ .dialog-table tbody tr.force-last-child td,
+ .dialog-table tbody tr:last-child th,
+ .dialog-table tbody tr.force-last-child th {
+     border-bottom-width:          1px;
+ }
+
+ .dialog-table tbody tr:last-child td:first-child,
+ .dialog-table tbody tr.force-last-child td:first-child,
+ .dialog-table tbody tr:last-child th:first-child,
+ .dialog-table tbody tr.force-last-child th:first-child {
+     border-bottom-left-radius:   4px;
+ }
+
+ .dialog-table tbody tr:last-child td:last-child,
+ .dialog-table tbody tr.force-last-child td:last-child {
+     border-bottom-right-radius:  4px;
+ }
+
+ .dialog-table .spacer {
+    height:                  10px;
+    border:                  1px solid transparent;
+ }
+
+ .dialog-table button {
+     min-width:              30px;
+     min-height:                 30px;
+     border:                1px solid #aaa;
+     border-radius:          3px;
+     color: #333;
+     cursor: pointer;
+ }
+
+ .dialog-table .small-button {
+     width:              30px;
+     height:             30px;
+ }
+
+ .dialog-table .input-save {
+     width:              80px;
+ }
+
+
+
+ .dialog-table input,
+ .dialog-table select {
+     margin:             2px;
+     border:             1px solid lightgray;
+     border-radius:      4px;
+     padding:            4px;
+     font-family:        Arial;
+     font-size:          10pt;
+ }
+
+ .dialog-table .ui-selectmenu-menu .ui-menu {
+     max-height: 150px;
+     width:      150px;
+ }
+
+ .dialog-table .hidden-cell {
+     display:               none;
+ }
+
+ /* Match dialog */
+ .match-dialog-match-number {
+   max-width: 60px;
+ }
+
+ /* Match score dialog */
+input.match-score-dialog-set {
+  max-width: 45px;
+  padding: 5px;
+  font-size: 12pt;
+  border: 1px solid transparent;
+}
+
+div.match-score-dialog-player {
+  font-size: 11pt;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #0f3670;
+}
+
+div.match-score-dialog-team {
+  font-size: 9pt;
+  white-space: nowrap;
+  overflow: hidden;
+  color: gray;
+}
+
+/* Player dialog */
+.player-dialog-container label,
+.player-dialog-container input {
+  margin-bottom: 5px;
+}
+
+.player-dialog-container label {
+  display: inline-block;
+  min-width: 90px;
+}
+
+.player-dialog-container input {
+  min-width: 200px;
+}
+
+.player-dialog-ac-name {
+  color: #0f3670;
+  font-size: 11pt;
+}
+
+.player-dialog-ac-team {
+  color: gray;
+  font-size: 9pt;
+}
+
+/* Court dialog */
+.court-dialog-container .court-venue-wait {
+  font-style: italic;
+  color: #333333;
+}
+
+/* Unit image dialog */
+.unit-image-dialog input[type='file'] {
+  display: none;
+}
+
+.unit-image-dialog .image-list-control-container {
+  height: 400px;
+}
+
+/* Tournament dialog */
+.tournament-dialog input[type='radio'] {
+  margin-left: 20px;
+}
+
+.tournament-dialog-date {
+  width: 100px;
+}
+
+.tournament-dialog-time {
+  width: 60px;
+}
+
+/* Link dialog */
+.link-dialog-container .link-dialog-list {
+  width: 300px;
+  height: 200px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 5px;
+  overflow: auto;
+}
+
+.link-dialog-container .link-dialog-list > div {
+  cursor: pointer;
+  padding: 4px;
+}
+
+.link-dialog-container .link-dialog-list > div:hover {
+  background-color: #d7e9f1;
+}

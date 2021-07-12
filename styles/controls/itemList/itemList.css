@@ -1,0 +1,135 @@
+.item-list-control {
+     border-collapse:        separate;
+     border-spacing:         0px;
+     margin:                 30px;
+
+     font-family:            Arial;
+     font-size:              10pt;
+ }
+
+ .item-list-control th,
+ .item-list-control td {
+     border-width:           1px 0px 0px 1px;
+     border-color:           #bbbbbb;
+     border-style:           solid;
+     padding:                5px;
+ }
+
+ .item-list-control td {
+     vertical-align:         top;
+     background-color:       white;
+     max-width: 420px;
+ }
+
+ .item-list-control th {
+     background-color:       #f6f6f6;
+     white-space: nowrap;
+ }
+
+ .item-list-control th:nth-last-child(2),
+ .item-list-control td:nth-last-child(2),
+ .item-list-control tbody.item-list-footer td:last-child {
+     border-right-width:     1px;
+ }
+
+ .item-list-control tbody:first-child th:first-child {
+     border-top-left-radius:     4px;
+ }
+
+ .item-list-control tbody:first-child th:nth-last-child(2) {
+     border-top-right-radius:    4px;
+ }
+
+ .item-list-control tbody:last-child tr:last-child td,
+ .item-list-control tbody:last-child tr.force-last-child td {
+     border-bottom-width:          1px;
+ }
+
+ .item-list-control tbody:last-child tr:last-child td:first-child,
+ .item-list-control tbody:last-child tr.force-last-child td:first-child {
+     border-bottom-left-radius:   4px;
+ }
+
+ .item-list-control tbody:last-child tr:last-child td:last-child,
+ .item-list-control tbody:last-child tr.force-last-child td:last-child {
+     border-bottom-right-radius:  4px;
+ }
+
+ .item-list-control .item-list-action-cell {
+   border: 1px solid transparent;
+   background: transparent;
+   min-width: 60px;
+   padding: 0;
+ }
+
+ .item-list-control .item-list-pagination {
+     font-family:                    Verdana, Arial;
+     font-size:                      8pt;
+     text-align:                     right;
+ }
+
+ .item-list-control .item-list-pagination-item {
+     margin-left:                    10px;
+     text-decoration:                none;
+ }
+
+ .item-list-control .item-list-pagination-item a {
+     text-decoration:                inherit;
+ }
+
+ .item-list-control .item-list-pagination-fast-previous,
+ .item-list-control .item-list-pagination-fast-next {
+     letter-spacing:                 -3px;
+ }
+
+ .item-list-control .item-list-pagination-current {
+     border:     1px solid grey;
+     border-radius: 3px;
+     padding:        2px;
+ }
+
+ .item-list-control .item-list-header th.sortable {
+   cursor: pointer;
+ }
+
+ .item-list-control .item-list-header th .item-list-control-asc,
+ .item-list-control .item-list-header th .item-list-control-desc {
+   opacity: 0.4;
+   display: none;
+ }
+
+ .item-list-control .item-list-header th.sortable[data-sort-order='asc'] .item-list-control-asc,
+ .item-list-control .item-list-header th.sortable[data-sort-order='desc'] .item-list-control-desc {
+   display: inline-block;
+ }
+
+ .item-list-control .item-list-items tr:hover td:not(.item-list-action-cell) {
+   background-color: #deebff;
+ }
+
+ .item-list-control .item-list-items tr.item-list-editing td:not(.item-list-action-cell) {
+   background-color: #ace6ac;
+ }
+
+ .item-list-control input.item-list-search-text {
+   box-sizing: border-box;
+   margin:             2px 0px 2px 40px;
+   border:             1px solid lightgray;
+   border-radius:      3px 0px 0px 3px;
+   padding:            2px;
+   font-family:        Arial;
+   font-size:          10pt;
+   height: 24px;
+ }
+
+ .item-list-control .item-list-edit-item,
+ .item-list-control .item-list-delete-item {
+   margin-right: 1px;
+   display: none;
+   cursor: pointer;
+ }
+
+ .item-list-control:not(.item-list-editing) .item-list-items tr:hover td.item-list-action-cell .item-list-edit-item,
+  .item-list-control:not(.item-list-editing) .item-list-items tr:hover td.item-list-action-cell .item-list-delete-item {
+   display: inline-block;
+ }
