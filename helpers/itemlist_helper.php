@@ -94,6 +94,16 @@ if (!class_exists('ItemlistDefaultInstance')) {
     }
 
     /**
+     * Override this to process and reformat any items sent to the client
+     * 
+     * @param Object $item           - Item to process
+     * @return Object                - The formatted item
+     */
+    function process_item($item) {
+      return $item;
+    }
+
+    /**
      * Get items from database
      * 
      * @param mixed $id - Identity of item to get
@@ -102,7 +112,8 @@ if (!class_exists('ItemlistDefaultInstance')) {
       foreach ($this->fields as $field) {
         $this->db->select($field['name']);
       }
-      return $this->db->where($this->identity_field, $id)->get($this->table)->row();
+      $item = $this->db->where($this->identity_field, $id)->get($this->table)->row();
+      return $item ? $this->process_item($item) : $item;
     }
 
     /**
@@ -149,6 +160,10 @@ if (!class_exists('ItemlistDefaultInstance')) {
       $this->apply_standard_filter($filters);
       // Get data from database
       $data = $this->db->get()->result();
+      // Custom format items
+      $data = array_map(function ($item) {
+        return $item ? $this->process_item($item) : $item;
+      }, $data);
       // Return data
       return $data;
     }
@@ -234,18 +249,6 @@ if (!class_exists('ItemlistDefaultInstance')) {
         if ($field['is_sortable']) $sortable[] = $field['name'];
       }
       return $sortable;
-    }
-
-    /**
-     * When using the create_item_list html-helper, this function will be called to
-     * translate table headers and option list items. Override this to provide custom
-     * translations.
-     * 
-     * @param String $field           -  The field id of the field to be translated
-     * @param String [$option]        -  (optional) The option value to be translated
-     */
-    public function custom_lang($field, $option = false) {
-      return false;
     }
   }
 }

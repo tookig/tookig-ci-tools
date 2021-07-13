@@ -261,7 +261,7 @@ var controls = controls || {}; // eslint-disable-line
         tr.find('td[data-name=\'' + column.name + '\']').empty().append(rendered)
       })
       tr.find('td.item-list-action-cell').append(
-        $('<button></button>').text(this.args.lang.save).addClass('item-edit-button').button({ icon: 'ui-icon-disk' }).click(saveCallback.call(this, tr, item))
+        $('<button></button>').text(this.args.lang.save).addClass('item-edit-button').button({ icon: 'ui-icon-disk' }).click(saveCallback.call(this, tr))
       ).append(
         $('<button></button>').text('').addClass('item-edit-button').button({ icon: 'ui-icon-close' }).click(cancelEditCallback.call(this, tr, item))
       )
@@ -282,7 +282,7 @@ var controls = controls || {}; // eslint-disable-line
     }.bind(this)
   }
 
-  function saveCallback (tr, item) {
+  function saveCallback (tr) {
     return () => {
       const newData = {}
       try {
@@ -307,10 +307,14 @@ var controls = controls || {}; // eslint-disable-line
 
   function cancelEditCallback (tr, item) {
     return function () {
-      tr.removeClass('item-list-new-row')
-      tr.find('.item-edit-button').remove()
-      tr.removeClass('item-list-editing')
-      this.update(tr, item)
+      if (tr.hasClass('item-list-new-row') && !item) {
+        tr.remove()
+      } else {
+        tr.removeClass('item-list-new-row')
+        tr.find('.item-edit-button').remove()
+        tr.removeClass('item-list-editing')
+        this.update(tr, item)
+      }
       this.element.removeClass('item-list-editing')
     }.bind(this)
   }

@@ -15,7 +15,7 @@ controls.itemListFormatters = controls.itemListFormatters || {}
       readOnly: false
     }, args)
     // Create formatter object
-    let formatter = Object.assign(controls.itemListFormatters.formatter(iargs), {
+    const formatter = Object.assign(controls.itemListFormatters.formatter(iargs), {
       input: input,
       parse: parse,
       render: render

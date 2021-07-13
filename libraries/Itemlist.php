@@ -66,11 +66,11 @@ class Itemlist {
     // Go through all fields and add validation.
     $this->load->library('flex_validation');
     foreach ($list_instance->fields as $field) {
-      $validation = 'trim|' . $field['validation'];
-      if ($field['name'] !== $list_instance->identity_field) {
-        $validation .= '|required';
-      }
       if ($this->should_read_field($list_instance, $field)) {
+        $validation = 'trim|' . $field['validation'];
+        if ($field['name'] !== $list_instance->identity_field) {
+          $validation .= '|required';
+        }
         $this->flex_validation->set_rules($field['name'], $field['description'], $validation);
       }
     }
