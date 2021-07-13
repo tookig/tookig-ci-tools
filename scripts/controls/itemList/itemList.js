@@ -150,10 +150,10 @@ var controls = controls || {}; // eslint-disable-line
     })
     $('<td></td>').addClass('item-list-action-cell')
       .append(
-        $('<div></div>').addClass('item-list-edit-item').button({ icon: 'ui-icon-pencil' }).click(editCallback.call(this, item, tr))
+        $('<div></div>').addClass('item-list-edit-item').button({ icon: 'ui-icon-pencil' }).click(editCallback.call(this, tr))
       )
       .append(
-        $('<div></div>').addClass('item-list-delete-item').button({ icon: 'ui-icon-trash' }).click(deleteCallback.call(this, item))
+        $('<div></div>').addClass('item-list-delete-item').button({ icon: 'ui-icon-trash' }).click(deleteCallback.call(this, tr))
       )
       .appendTo(tr)
     this.element.find('tbody.item-list-items').first().append(tr)
@@ -175,7 +175,6 @@ var controls = controls || {}; // eslint-disable-line
     })
     const iRefItem = this._itemDOMObjectReferences.find(iRef => iRef.iid === parseInt(tr.attr('data-iid'), 10))
     if (iRefItem) {
-      console.log('Update iRef', iRefItem)
       iRefItem.item = item
     }
   }
@@ -247,12 +246,13 @@ var controls = controls || {}; // eslint-disable-line
         return
       }
       const tr = this.insert().addClass('item-list-new-row')
-      editCallback.call(this, undefined, tr)()
+      editCallback.call(this, tr)()
     }.bind(this)
   }
 
-  function editCallback (item, tr) {
+  function editCallback (tr) {
     return () => {
+      const item = this.getItemFromIID(parseInt(tr.attr('data-iid'), 10))
       this.args.columns.forEach(function (column) {
         let rendered = ''
         if (column.formatter) {
@@ -270,8 +270,9 @@ var controls = controls || {}; // eslint-disable-line
     }
   }
 
-  function deleteCallback (item) {
+  function deleteCallback (tr) {
     return function () {
+      const item = this.getItemFromIID(parseInt(tr.attr('data-iid'), 10))
       Promise.resolve((typeof this.args.delete === 'function') ? this.args.delete(item) : true).then(function (success) {
         if (success) {
           this.load()
