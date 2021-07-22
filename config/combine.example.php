@@ -19,3 +19,8 @@ $config['css_dir'] = 'assets/css/';
  * Directory to store output files. Must be writeable.
  */
 $config['cache_dir'] = 'assets/cache/';
+
+/**
+ * The path to the cache dir as sent to the clients
+ */
+$config['cache_url'] = 'assets/cache';

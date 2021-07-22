@@ -5,6 +5,7 @@ class Combine {
   protected $js_dir;
   protected $css_dir;
   protected $cache_dir;
+  protected $cache_url;
 
   // Array with info on files to combine
   protected $js_files = [];
@@ -22,6 +23,7 @@ class Combine {
     $this->js_dir = $this->config->item('js_dir', 'combine');
     $this->css_dir = $this->config->item('css_dir', 'combine');
     $this->cache_dir = $this->config->item('cache_dir', 'combine');
+    $this->cache_url = $this->config->item('cache_url', 'combine');
     // Make them arrays if they are not already
     foreach ([&$this->js_dir, &$this->css_dir] as &$dirs) {
       if (!is_array($dirs)) {
@@ -34,8 +36,11 @@ class Combine {
         }
       }
     }
-    if (substr($this->cache_dir, -1) !== DIRECTORY_SEPARATOR) {
-      $this->cache_dir .= DIRECTORY_SEPARATOR;
+    // Add separators to the cache dirss
+    foreach ([&$this->cache_dir, &$this->cache_url] as &$dir) {
+      if (substr($dir, -1) !== DIRECTORY_SEPARATOR) {
+        $dir .= DIRECTORY_SEPARATOR;
+      }
     }
   }
 
@@ -81,10 +86,10 @@ class Combine {
 
     $output = '';
     if (isset($this->output_files['js'])) {
-      $output .= '<script type="text/javascript" src="' . site_url($this->cache_dir . $this->output_files['js']) . '"></script>' . PHP_EOL;
+      $output .= '<script type="text/javascript" src="' . site_url($this->cache_url . $this->output_files['js']) . '"></script>' . PHP_EOL;
     }
     if (isset($this->output_files['css'])) {
-      $output .= '<link type="text/css" rel="stylesheet" href="' . site_url($this->cache_dir . $this->output_files['css']) . '" media="screen"/>' . PHP_EOL;
+      $output .= '<link type="text/css" rel="stylesheet" href="' . site_url($this->cache_url . $this->output_files['css']) . '" media="screen"/>' . PHP_EOL;
     }
     if ($as_string) {
       return $output;
