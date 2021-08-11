@@ -133,10 +133,12 @@ var controls = controls || {}; // eslint-disable-line
     Promise.resolve(this.args.load(loadArgs)).then(data => {
       this.element.find('tbody.item-list-items').empty()
       this._itemDOMObjectReferences = []
-      data.items?.forEach(item => {
-        const tr = this.insert(item)
-        this.update(tr, item)
-      })
+      if (data.items) {
+        data.items.forEach(item => {
+          const tr = this.insert(item)
+          this.update(tr, item)
+        })
+      }
       updatePagination.call(this, data.count)
       this.element.removeClass('item-list-editing')
     })
