@@ -62,8 +62,26 @@ class Flex_validation extends CI_Form_validation {
     return parent::reset_validation();
   }
 
-  public function value($field) {
-    return isset($this->post_check_values[$field]) ? $this->post_check_values[$field] : null;
+  public function value($field_name) {
+    return isset($this->post_check_values[$field_name]) ? $this->post_check_values[$field_name] : null;
+  }
+
+  public function values($field_names) {
+    $rval = [];
+    foreach ($field_names as $field_name) {
+      $rval[$field_name] = $this->value($field_name);
+    }
+    return $rval;
+  }
+
+  public function values_if_set($field_names) {
+    $rval = [];
+    foreach ($field_names as $field_name) {
+      if (isset($this->post_check_values[$field_name])) {
+        $rval[$field_name] = $this->post_check_values[$field_name];
+      }
+    }
+    return $rval;
   }
 
   protected function get_field($field) {

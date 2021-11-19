@@ -43,6 +43,7 @@ if (!class_exists('ItemlistDefaultInstance')) {
     public $identity_field;
     public $default_sort;
     public $readonly;
+    public $settings;
     public $fields = [];
 
     /**
@@ -62,17 +63,17 @@ if (!class_exists('ItemlistDefaultInstance')) {
       // Load itemlist lib
       $this->load->library('itemlist');
       // Get settings
-      $settings = $this->itemlist->lookup_list($list_name);
-      if (!$settings) {
+      $this->settings = $this->itemlist->lookup_list($list_name);
+      if (!$this->settings) {
         $this->_add_errors('Listitem settings not valid')->_fail(400);
       }
       // Save settings
       $this->name = $list_name;
-      $this->table = $settings->table;
-      $this->identity_field = $settings->identity_field;
-      $this->default_sort = $settings->default_sort;
-      $this->fields = $settings->fields;
-      $this->readonly = property_exists($settings, 'readonly') ? $settings->readonly : true;
+      $this->table = $this->settings->table;
+      $this->identity_field = $this->settings->identity_field;
+      $this->default_sort = $this->settings->default_sort;
+      $this->fields = $this->settings->fields;
+      $this->readonly = property_exists($this->settings, 'readonly') ? $this->settings->readonly : true;
     }
 
     /**
