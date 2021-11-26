@@ -10,12 +10,10 @@ controls.itemListFormatters = controls.itemListFormatters || {}
    * @param {Object[]} args               Column options
    * @param {boolean} [args.readOnly=false]    Flag for if the column is read only or editable. ONLY REDAONLY FOR NOW
    */
-  function dateTimeFormatter (args) {
+  function dateFormatter (args) {
     const iargs = Object.assign({
       readOnly: false
     }, args)
-    // TEMP
-    iargs.readOnly = true
     // Create formatter object
     let obj = Object.assign(controls.itemListFormatters.formatter(iargs), {
       input: input,
@@ -27,27 +25,27 @@ controls.itemListFormatters = controls.itemListFormatters || {}
 
   /**
    * Render an item
-   * @param {string} time Time to render
+   * @param {string} date Date to render
    * @return {Object} Object to add to DOM
    */
-  function render (time) {
-    if (factory.date.isValidDate(time)) {
-      return $('<div/>').text(time.toLocalMySQLString()).addClass('item-list-datetime')
+  function render (date) {
+    if (factory.date.isValidDate(date)) {
+      return $('<div/>').text(date.toLocalISODateString()).addClass('item-list-date')
     }
     return ''
   }
 
   /**
    * Render input form
-   * @param {Object} time Default time for the input box
+   * @param {Object} date Default date for the input box
    * @return {Object} Object to add to DOM
    */
-  function input (time) {
+  function input (date) {
     if (this.args.readOnly) {
-      return this.render(time)
+      return this.render(date)
     }
-    return $('<input></input>').attr('type', 'text').val(time ? time.toShortTimeString() : '').timepicker({
-      timeFormat: 'H:i'
+    return $('<input></input>').addClass('item-list-date').attr('type', 'text').val(date ? date.toLocalISODateString() : '').datepicker({
+      dateFormat: 'yy-mm-dd'
     }).addClass('item-list-time')
   }
 
@@ -63,6 +61,6 @@ controls.itemListFormatters = controls.itemListFormatters || {}
     return element.val()
   }
 
-  formatters.dateTimeFormatter = dateTimeFormatter
+  formatters.dateFormatter = dateFormatter
 })(controls.itemListFormatters)
 ; // eslint-disable-line

@@ -67,9 +67,15 @@ class Itemlist {
     $this->load->library('flex_validation');
     foreach ($list_instance->fields as $field) {
       if ($this->should_read_field($list_instance, $field)) {
-        $validation = 'trim|' . $field['validation'];
+        // All items should be trimmed
+        $validation = ['trim'];
+        // Add validation from config file
+        array_push($validation, ...$this->make_validation_array($field['validation']));
+        // Add validation from list instance class
+        array_push($validation, ...$list_instance->additional_validation($field));
+        // Add required flag for all input except identity fields
         if ($field['name'] !== $list_instance->identity_field) {
-          $validation .= '|required';
+          $validation[] = 'required';
         }
         $this->flex_validation->set_rules($field['name'], $field['description'], $validation);
       }
@@ -112,7 +118,7 @@ class Itemlist {
     }
     // Validate
     $this->load->library('flex_validation');
-    $validation = 'trim|required|' . $identity['validation'];
+    $validation = array_merge(['trim', 'required'],  $this->make_validation_array($identity['validation']));
     $this->flex_validation->set_rules($identity['name'], $identity['description'], $validation);
     if (!$this->flex_validation->run()) {
       $this->_add_errors($this->flex_validation->error_array())->_fail(self::BAD_REQUEST);
@@ -206,5 +212,17 @@ class Itemlist {
 
   protected function should_read_field($list_instance, $field) {
     return ($field['name'] === $list_instance->identity_field) || ($field['is_readonly'] !== true);
+  }
+
+  /**
+   * Parse validation string or array and return an array with validation rules
+   */
+  protected function make_validation_array($rules) {
+    if (is_string($rules) && (strlen($rules) > 0)) {
+      return explode('|', $rules);
+    } else if (is_array($rules)) {
+     return $rules;
+    }
+    return [];
   }
 }

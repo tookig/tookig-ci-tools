@@ -251,5 +251,14 @@ if (!class_exists('ItemlistDefaultInstance')) {
       }
       return $sortable;
     }
+
+    /**
+     * Add additional validation rules to a field
+     * @param object $field         - Field to get rules for
+     * @return Array                - Array with CI form validation rules 
+     */
+    public function additional_validation($field) {
+      return [];
+    }
   }
 }
