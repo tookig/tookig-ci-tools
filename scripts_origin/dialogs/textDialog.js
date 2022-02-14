@@ -1,5 +1,3 @@
-"use strict";
-
 // Make sure there is a dialogs object
 var dialogs = dialogs || {}; // eslint-disable-line
 
@@ -14,16 +12,17 @@ var dialogs = dialogs || {}; // eslint-disable-line
    * @param  {function} [args.cancelCallback]   Callback for the Cancel button. Optional, can also use the 'cancel' function returned by textDialog
    * @return {object}
    */
-  function textDialog(args) {
+  function textDialog (args) {
     // Create the dialog object
-    var dialog = dialogs.dialog(args).create({// height: 200,
+    const dialog = dialogs.dialog(args).create({
+      // height: 200,
       // width: 400
-    }); // Add text
-
-    dialog.element.text(args.text); // Show and return
-
-    return dialog.show();
+    })
+    // Add text
+    dialog.element.text(args.text)
+    // Show and return
+    return dialog.show()
   }
 
-  dialogs.textDialog = textDialog;
-})(dialogs);
+  dialogs.textDialog = textDialog
+}(dialogs))

@@ -1,6 +1,5 @@
-"use strict";
-
 /* global $, AggregateError */
+
 // Make sure there is a dialogs object
 var dialogs = dialogs || {}; // eslint-disable-line
 
@@ -15,63 +14,57 @@ var dialogs = dialogs || {}; // eslint-disable-line
    * @param  {function} [args.okCallback]   Callback for the OK button. Optional, can also use the 'ok' function returned by textDialog
    * @return {object}
    */
-  function errorDialog(args) {
-    var errors = [];
-
+  function errorDialog (args) {
+    let errors = []
     if (typeof args.error === 'string') {
-      errors = [args.error];
+      errors = [args.error]
     } else if (args.error instanceof AggregateError) {
-      errors = args.error.errors.map(function (e) {
-        return e.message;
-      });
+      errors = args.error.errors.map(e => e.message)
     } else if (args.error instanceof Error) {
-      errors = [args.error.message];
+      errors = [args.error.message]
     } else if (Array.isArray(args.error)) {
-      errors = args.error;
+      errors = args.error
     }
 
-    var iargs = Object.assign({
+    const iargs = Object.assign({
       errors: errors,
       title: 'Error',
       ok: 'OK',
-      okCallback: function okCallback() {}
-    }, args);
-    var robject = {
-      ok: function ok(func) {
-        iargs.okCallback = func;
-        return robject;
+      okCallback: function () {}
+    }, args)
+
+    const robject = {
+      ok: function (func) {
+        iargs.okCallback = func
+        return robject
       }
-    };
-    show(iargs);
-    return robject;
+    }
+    show(iargs)
+    return robject
   }
 
-  function show(args) {
-    var element = $('<div class="error-list-dialog-container"></div>').attr('title', args.title);
-    var ul = $('<ul/>').appendTo(element);
-
-    for (var i in args.errors) {
-      $('<li/>').text(args.errors[i]).appendTo(ul);
+  function show (args) {
+    const element = $('<div class="error-list-dialog-container"></div>').attr('title', args.title)
+    const ul = $('<ul/>').appendTo(element)
+    for (const i in args.errors) {
+      $('<li/>').text(args.errors[i]).appendTo(ul)
     }
-
-    var buttons = {};
-
+    const buttons = {}
     buttons[args.ok] = function () {
-      args.okCallback(args.ok);
-      element.dialog('close');
-    };
-
+      args.okCallback(args.ok)
+      element.dialog('close')
+    }
     element.appendTo('body').dialog({
       autoOpen: false,
       height: 'auto',
       width: 'auto',
       modal: true,
       buttons: buttons,
-      close: function close() {
-        element.remove();
+      close: function () {
+        element.remove()
       }
-    }).dialog('open');
+    }).dialog('open')
   }
 
-  dialogs.errorDialog = errorDialog;
-})(dialogs);
+  dialogs.errorDialog = errorDialog
+}(dialogs))

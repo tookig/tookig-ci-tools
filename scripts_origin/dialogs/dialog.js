@@ -1,110 +1,101 @@
-"use strict";
-
 /* global $ */
+
 // Make sure there is a dialogs object
 var dialogs = dialogs || {}; // eslint-disable-line
 
 (function (dialogs) {
   // Counter for createing unique dialog id's
-  var nuid = 1;
+  let nuid = 1
 
-  function ok(func) {
-    this.args.okCallback = func;
-    return this;
+  function ok (func) {
+    this.args.okCallback = func
+    return this
   }
 
-  function cancel(func) {
-    this.args.cancelCallback = func;
-    return this;
+  function cancel (func) {
+    this.args.cancelCallback = func
+    return this
   }
+
   /**
    * Create the jQuery dialog
    * @param  {mixed[]} jQueryOptions jQuery dialog options
    * @return {object}                Self reference for method chaining
    */
-
-
-  function create(jQueryOptions) {
+  function create (jQueryOptions) {
     // make sure this is only called once
     if (this.element) {
-      throw new Error('dialog create function can only be called once');
-    } // Create base DOM element
+      throw new Error('dialog create function can only be called once')
+    }
+    // Create base DOM element
+    const element = $('<div class="dialog-container"></div>').attr('title', this.args.title)
+    this.element = element
 
-
-    var element = $('<div class="dialog-container"></div>').attr('title', this.args.title);
-    this.element = element; // Sort the jQuery options
-
-    var options = Object.assign({
+    // Sort the jQuery options
+    const options = Object.assign({
       autoOpen: false,
       height: 'auto',
       width: 'auto',
       modal: true,
       buttons: this.buttons(),
-      close: function close() {
-        element.remove();
+      close: function () {
+        element.remove()
       }
-    }, jQueryOptions); // Create the dialog box
-
-    element.appendTo('body').dialog(options); // Return self reference
-
-    return this;
+    }, jQueryOptions)
+    // Create the dialog box
+    element.appendTo('body').dialog(options)
+    // Return self reference
+    return this
   }
+
   /**
    * Parse the dialog data, and return the object to be sent to the
    * 'ok'-callback.
    * @return {mixed} The object to be sent to the 'ok'-callback
    */
-
-
-  function parse() {
-    return undefined;
+  function parse () {
+    return undefined
   }
+
   /**
    * Show the dialog box
    * @return {object}                Self reference for method chaining
    */
-
-
-  function show() {
-    this.element.dialog('open');
-    return this;
+  function show () {
+    this.element.dialog('open')
+    return this
   }
+
   /**
    * Close the dialog box
    * @return {object}                Self reference for method chaining
    */
-
-
-  function close() {
-    return this.element.dialog('close');
+  function close () {
+    return this.element.dialog('close')
   }
+
   /**
    * Create the buttons array
    * @return {[type]} [description]
    */
-
-
-  function buttons() {
+  function buttons () {
     // Create the buttons
-    var buttons = {};
-
+    const buttons = {}
     buttons[this.args.lang.ok] = function () {
       Promise.resolve(this.args.okCallback(this.parse())).then(function (shouldClose) {
         if (shouldClose) {
-          this.close();
+          this.close()
         }
-      }.bind(this));
-    }.bind(this);
-
+      }.bind(this))
+    }.bind(this)
     buttons[this.args.lang.cancel] = function () {
-      this.args.cancelCallback();
-      this.close();
-    }.bind(this);
-
-    return buttons;
+      this.args.cancelCallback()
+      this.close()
+    }.bind(this)
+    return buttons
   }
 
-  var dialogPrototype = {
+  const dialogPrototype = {
     ok: ok,
     cancel: cancel,
     create: create,
@@ -112,7 +103,8 @@ var dialogs = dialogs || {}; // eslint-disable-line
     show: show,
     close: close,
     buttons: buttons
-  };
+  }
+
   /**
    * Base functionality for dialog objects
    *
@@ -125,27 +117,26 @@ var dialogs = dialogs || {}; // eslint-disable-line
    * @param  {function} [args.cancelCallback]         Callback for the Cancel button. Optional, can also use the 'cancel' function returned by dialog
    * @return {object}
    */
-
-  function dialog(args) {
+  function dialog (args) {
     // Set default values
-    var iargs = Object.assign({
+    const iargs = Object.assign({
       title: 'Dialog title',
-      okCallback: function okCallback() {},
-      cancelCallback: function cancelCallback() {}
-    }, args); // Set default translations
-
+      okCallback: function () {},
+      cancelCallback: function () {}
+    }, args)
+    // Set default translations
     iargs.lang = Object.assign({
       ok: 'OK',
       cancel: 'Cancel'
-    }, args.lang); // Create dialog object
-
-    var dialogObject = Object.assign({
+    }, args.lang)
+    // Create dialog object
+    const dialogObject = Object.assign({
       args: iargs,
       uid: nuid++
-    }, dialogPrototype); // Return
-
-    return dialogObject;
+    }, dialogPrototype)
+    // Return
+    return dialogObject
   }
 
-  dialogs.dialog = dialog;
-})(dialogs);
+  dialogs.dialog = dialog
+}(dialogs))
