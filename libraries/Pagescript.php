@@ -3,6 +3,8 @@
 class Pagescript {
   // Scripts to include in page header
   protected $scripts = [];
+  // Styles to include in page header
+  protected $styles = [];
   // Injection constants
   protected $injects = [];
 
@@ -20,12 +22,19 @@ class Pagescript {
     $this->scripts[] = $scriptUrl;
   }
 
+  public function add_style_url($styleUrl) {
+    $this->styles[] = $styleUrl;
+  }
+
   public function add_inject($key, $value) {
     $this->injects[$key] = $value;
   }
 
-  public function renderScriptTags($returnAsString = true) {
+  public function renderHeaderTags($returnAsString = true) {
     $val = '';
+    foreach ($this->styles as $style) {
+      $val .= "<link type='text/css' rel='stylesheet' href='$style' media='screen' />";
+    }
     foreach ($this->scripts as $script) {
       $val .= "<script type='text/javascript' src='$script'></script>";
     }

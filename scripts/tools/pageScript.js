@@ -8,7 +8,6 @@ var tools = tools || {} // eslint-disable-line
   function inject(key) {
     var form = document.getElementById('page-script-injections');
     var val = form.querySelector('input[name=\'' + key + '\']').value;
-    console.log(val);
     return JSON.parse(val);
   }
 

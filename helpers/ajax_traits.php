@@ -62,24 +62,24 @@ if (!trait_exists('AjaxTrait')) {
       exit;
     }
 
-  /**
-   * Checks csrf token in ajax request
-   * 
-   * @param bool [$autofail=true] True if to send an automatic fail response if csrf check fails.
-   * @param string [$csrf_parameter_name='csrf_token] Set if to use different token name then sepcified in config.php
-   */
-  function _csrf_verify($autofail = true, $csrf_parameter_name = false) {
-    if ($csrf_parameter_name === false) {
-      $csrf_parameter_name = $this->config->item('csrf_token_name');
+    /**
+     * Checks csrf token in ajax request
+     * 
+     * @param bool [$autofail=true] True if to send an automatic fail response if csrf check fails.
+     * @param string [$csrf_parameter_name='csrf_token] Set if to use different token name then sepcified in config.php
+     */
+    function _csrf_verify($autofail = true, $csrf_parameter_name = false) {
+      if ($csrf_parameter_name === false) {
+        $csrf_parameter_name = $this->config->item('csrf_token_name');
+      }
+      $token = $this->input->get_post($csrf_parameter_name);
+      if ($token && hash_equals($token, $this->security->get_csrf_hash())) {
+        return true;
+      }
+      if ($autofail) {
+        $this->_add_errors('Security error')->_fail(401);
+      }
+      return false;
     }
-    $token = $this->input->get_post($csrf_parameter_name);
-    if ($token && hash_equals($token, $this->security->get_csrf_hash())) {
-      return true;
-    }
-    if ($autofail) {
-      $this->_add_errors('Security error')->_fail(401);
-    }
-    return false;
-  }
   }
 }
