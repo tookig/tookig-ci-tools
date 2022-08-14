@@ -8,6 +8,11 @@ if (!trait_exists('AjaxTrait')) {
     protected $_ajax_errors = [];
 
     /**
+     * Flag for if to print ajax results to log
+     */
+    protected $log_ajax = false;
+
+    /**
      * Save error(s) to be sent with the response to the client
      *
      * @param [string|array] $errors String or array with strings
@@ -34,6 +39,12 @@ if (!trait_exists('AjaxTrait')) {
      */
     function _success($data = [], $json_encoding_options = 0) {
       $ci = &get_instance();
+      
+      if ($this->log_ajax) {
+        log_message('DEBUG', "API call to " . current_url() . " succeeded:");
+        log_message('DEBUG', print_r($data, true));
+      }
+
       $data['success'] = 1;
       $ci->output->set_output(json_encode($data, $json_encoding_options));
       $ci->output->_display();
@@ -53,6 +64,12 @@ if (!trait_exists('AjaxTrait')) {
     function _fail($code = 500, $data = [], $json_encoding_options = 0) {
       $ci = &get_instance();
       $ci->output->set_status_header($code);
+
+      if ($this->log_ajax) {
+        log_message('DEBUG', "API call to " . current_url() . " failed (code $code):");
+        log_message('DEBUG', print_r($data, true));
+      }
+
       $data['success'] = 0;
       if (!isset($data['errors']) && (count($this->_ajax_errors) > 0)) {
         $data['errors'] = $this->_ajax_errors;
@@ -80,6 +97,13 @@ if (!trait_exists('AjaxTrait')) {
         $this->_add_errors('Security error')->_fail(401);
       }
       return false;
+    }
+
+    /**
+     * Set header for a json response
+     */
+    function _set_json_header() {
+      header('Content-Type: application/json; charset=utf-8');
     }
   }
 }
