@@ -18,8 +18,11 @@ class Pagescript {
 		return get_instance()->$var;
 	}
 
-  public function add_script_url($scriptUrl) {
-    $this->scripts[] = $scriptUrl;
+  public function add_script_url($scriptUrl, $extraTags = '') {
+    $this->scripts[] = [
+      'url' => $scriptUrl,
+      'extra' => $extraTags
+    ];
   }
 
   public function add_style_url($styleUrl) {
@@ -36,7 +39,7 @@ class Pagescript {
       $val .= "<link type='text/css' rel='stylesheet' href='$style' media='screen' />";
     }
     foreach ($this->scripts as $script) {
-      $val .= "<script type='text/javascript' src='$script'></script>";
+      $val .= "<script type='text/javascript' src='{$script['url']}' {$script['extra']}></script>";
     }
     if ($returnAsString) {
       return $val;

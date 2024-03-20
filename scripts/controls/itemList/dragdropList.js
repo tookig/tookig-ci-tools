@@ -1,6 +1,7 @@
 "use strict";
 
 /* global $ */
+
 // Make sure there is a controls object
 var controls = controls || {}; // eslint-disable-line
 
@@ -21,13 +22,13 @@ var controls = controls || {}; // eslint-disable-line
     // Set default values
     var iargs = Object.assign({
       dragDrop: function dragDrop(item, from, to) {}
-    }, args); // Edit args and make sure there is no upper limit on how many rows
+    }, args);
+    // Edit args and make sure there is no upper limit on how many rows
     // can be present
-
     iargs.pagination = Object.assign({}, args.pagination, {
       maxCount: Number.MAX_SAFE_INTEGER
-    }); // Make sure no columns are marked as sortable
-
+    });
+    // Make sure no columns are marked as sortable
     iargs.columns.forEach(function (column) {
       column.sortable = false;
     });
@@ -38,17 +39,15 @@ var controls = controls || {}; // eslint-disable-line
     list.create = createOverride(list.create);
     return list;
   }
-
   function headerOverride(header) {
     return function () {
       // Create header in base class
-      var tbody = header.call(this); // Add an extra column for the grab handle
-
+      var tbody = header.call(this);
+      // Add an extra column for the grab handle
       $('<th></th>').prependTo(tbody.find('tr').first());
       return this;
     };
   }
-
   function footerOverride(footer) {
     return function () {
       var tbody = footer.call(this);
@@ -60,17 +59,15 @@ var controls = controls || {}; // eslint-disable-line
       return tbody;
     };
   }
-
   function insertOverride(insert) {
     return function (item) {
       // Get row
-      var tr = insert.call(this, item); // Add grip handle
-
+      var tr = insert.call(this, item);
+      // Add grip handle
       $('<td></td>').append($('<span></span>').addClass('ui-icon ui-icon-grip-dotted-horizontal')).prependTo(tr);
       return tr;
     };
   }
-
   function createOverride(create) {
     return function () {
       create.call(this);
@@ -81,17 +78,14 @@ var controls = controls || {}; // eslint-disable-line
       return this;
     };
   }
-
   function startDragDrop(event, ui) {
     this._dragFrom = ui.item.index();
   }
-
   function endDragDrop(event, ui) {
     Promise.resolve(this.args.dragDrop(this.getItemFromIID(parseInt(ui.item.attr('data-iid'), 10)), this._dragFrom, ui.item.index())).then(function (success) {
       // Lazy here, just reloading
       this.load();
     }.bind(this));
   }
-
   controls.dragDropList = dragDropList;
 })(controls); // eslint-disable-line

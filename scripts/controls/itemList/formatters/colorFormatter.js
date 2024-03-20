@@ -1,11 +1,10 @@
 "use strict";
 
 /* global $ */
+
 // Make sure there is a controls object
 var controls = controls || {}; // eslint-disable-line
-
 controls.itemListFormatters = controls.itemListFormatters || {};
-
 (function (formatters) {
   /**
    * A formatter for color data.
@@ -15,8 +14,8 @@ controls.itemListFormatters = controls.itemListFormatters || {};
   function colorFormatter(args) {
     var iargs = Object.assign({
       readOnly: false
-    }, args); // Create formatter object
-
+    }, args);
+    // Create formatter object
     var formatter = Object.assign(controls.itemListFormatters.formatter(iargs), {
       input: input,
       parse: parse,
@@ -24,23 +23,21 @@ controls.itemListFormatters = controls.itemListFormatters || {};
     });
     return formatter;
   }
+
   /**
    * Render an item
    * @param {string} item Item to render
    * @return {Object} Object to add to DOM
    */
-
-
   function render(item) {
     return $('<div></div>').addClass('item-list-color').css('background-color', item);
   }
+
   /**
    * Render input form
    * @param {Object} item Default color for the input
    * @return {Object} Object to add to DOM
    */
-
-
   function input(item) {
     var element = $('<input></input>').attr('type', 'text').val(item);
     window.setTimeout(function () {
@@ -59,16 +56,14 @@ controls.itemListFormatters = controls.itemListFormatters || {};
     }.bind(this), 10);
     return element;
   }
+
   /**
    * Parse the value of the color box
    * @param {Object} element DOM element
    * @return {number} A CSS color value
    */
-
-
   function parse(element) {
     return element.val();
   }
-
   formatters.colorFormatter = colorFormatter;
 })(controls.itemListFormatters); // eslint-disable-line

@@ -16,14 +16,14 @@ var dialogs = dialogs || {}; // eslint-disable-line
    */
   function textDialog(args) {
     // Create the dialog object
-    var dialog = dialogs.dialog(args).create({// height: 200,
+    var dialog = dialogs.dialog(args).create({
+      // height: 200,
       // width: 400
-    }); // Add text
-
-    dialog.element.text(args.text); // Show and return
-
+    });
+    // Add text
+    dialog.element.text(args.text);
+    // Show and return
     return dialog.show();
   }
-
   dialogs.textDialog = textDialog;
 })(dialogs);

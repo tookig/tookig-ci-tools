@@ -1,6 +1,7 @@
 "use strict";
 
 /* global $, AggregateError */
+
 // Make sure there is a dialogs object
 var dialogs = dialogs || {}; // eslint-disable-line
 
@@ -17,7 +18,6 @@ var dialogs = dialogs || {}; // eslint-disable-line
    */
   function errorDialog(args) {
     var errors = [];
-
     if (typeof args.error === 'string') {
       errors = [args.error];
     } else if (args.error instanceof AggregateError) {
@@ -29,7 +29,6 @@ var dialogs = dialogs || {}; // eslint-disable-line
     } else if (Array.isArray(args.error)) {
       errors = args.error;
     }
-
     var iargs = Object.assign({
       errors: errors,
       title: 'Error',
@@ -45,22 +44,17 @@ var dialogs = dialogs || {}; // eslint-disable-line
     show(iargs);
     return robject;
   }
-
   function show(args) {
     var element = $('<div class="error-list-dialog-container"></div>').attr('title', args.title);
     var ul = $('<ul/>').appendTo(element);
-
     for (var i in args.errors) {
       $('<li/>').text(args.errors[i]).appendTo(ul);
     }
-
     var buttons = {};
-
     buttons[args.ok] = function () {
       args.okCallback(args.ok);
       element.dialog('close');
     };
-
     element.appendTo('body').dialog({
       autoOpen: false,
       height: 'auto',
@@ -72,6 +66,5 @@ var dialogs = dialogs || {}; // eslint-disable-line
       }
     }).dialog('open');
   }
-
   dialogs.errorDialog = errorDialog;
 })(dialogs);

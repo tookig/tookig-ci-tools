@@ -1,11 +1,10 @@
 "use strict";
 
 /* global $, factory */
+
 // Make sure there is a controls object
 var controls = controls || {}; // eslint-disable-line
-
 controls.itemListFormatters = controls.itemListFormatters || {};
-
 (function (formatters) {
   /**
    * A formatter for date and time fields
@@ -15,10 +14,10 @@ controls.itemListFormatters = controls.itemListFormatters || {};
   function dateTimeFormatter(args) {
     var iargs = Object.assign({
       readOnly: false
-    }, args); // TEMP
-
-    iargs.readOnly = true; // Create formatter object
-
+    }, args);
+    // TEMP
+    iargs.readOnly = true;
+    // Create formatter object
     var obj = Object.assign(controls.itemListFormatters.formatter(iargs), {
       input: input,
       parse: parse,
@@ -26,50 +25,43 @@ controls.itemListFormatters = controls.itemListFormatters || {};
     });
     return obj;
   }
+
   /**
    * Render an item
    * @param {string} time Time to render
    * @return {Object} Object to add to DOM
    */
-
-
   function render(time) {
     if (factory.date.isValidDate(time)) {
       return $('<div/>').text(time.toLocalMySQLString()).addClass('item-list-datetime');
     }
-
     return '';
   }
+
   /**
    * Render input form
    * @param {Object} time Default time for the input box
    * @return {Object} Object to add to DOM
    */
-
-
   function input(time) {
     if (this.args.readOnly) {
       return this.render(time);
     }
-
     return $('<input></input>').attr('type', 'text').val(time ? time.toShortTimeString() : '').timepicker({
       timeFormat: 'H:i'
     }).addClass('item-list-time');
   }
+
   /**
    * Create a new text from a DOM element
    * @param {Object} element DOM element
    * @return {Object} Parsed text
    */
-
-
   function parse(element) {
     if (this.args.readOnly) {
       return element.text();
     }
-
     return element.val();
   }
-
   formatters.dateTimeFormatter = dateTimeFormatter;
 })(controls.itemListFormatters); // eslint-disable-line

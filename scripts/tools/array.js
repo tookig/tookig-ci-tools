@@ -3,7 +3,6 @@
 // Make sure there is a tools object
 var tools = tools || {} // eslint-disable-line
 ;
-
 (function (tools) {
   /**
    * Find difference between two arrays.
@@ -18,7 +17,6 @@ var tools = tools || {} // eslint-disable-line
       });
     });
   }
-
   tools.array = {
     diff: diff
   };
