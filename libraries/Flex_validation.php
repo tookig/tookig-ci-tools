@@ -93,6 +93,10 @@ class Flex_validation extends CI_Form_validation
     return $rval;
   }
 
+  public function all_set_values() {
+    return $this->post_check_values;
+  }
+
   protected function get_field($field)
   {
     if ($this->mode === self::FLEX_MODE_MIXED) {
