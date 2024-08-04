@@ -93,8 +93,14 @@ class Flex_validation extends CI_Form_validation
     return $rval;
   }
 
-  public function all_set_values() {
+  public function all_values() {
     return $this->post_check_values;
+  }
+
+  public function all_set_values() {
+    return array_filter($this->post_check_values, function ($value) {
+      return $value !== null;
+    });
   }
 
   public function has_value($field_name) {
