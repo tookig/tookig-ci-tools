@@ -33,7 +33,7 @@ var controls = controls || {}; // eslint-disable-line
       load: function (args) { return [] },
       pagination: Object.assign({
         startIndex: parseInt(window.sessionStorage.getItem(window.location.pathname + '/itemList.startIndex'), 10) || 0,
-        maxCount: parseInt(window.sessionStorage.getItem(window.location.pathname + '/itemList.maxCount'), 10) || 5,
+        maxCount: parseInt(window.sessionStorage.getItem(window.location.pathname + '/itemList.maxCount'), 10) || 20,
         sortBy: window.sessionStorage.getItem(window.location.pathname + '/itemList.sortBy') || false,
         sortOrder: window.sessionStorage.getItem(window.location.pathname + '/itemList.sortOrder') || 'asc',
         search: false // window.sessionStorage.getItem(window.location.pathname + '/itemList.search') || false
