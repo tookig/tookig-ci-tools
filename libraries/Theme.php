@@ -27,6 +27,10 @@ class Theme {
     $this->theme_vars = $vars;
   }
 
+  public function set_theme_var($name, $value) {
+    $this->theme_vars[$name] = $value;
+  }
+
   /**
    * Add a partial view to the theme
    * 
