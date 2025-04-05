@@ -65,15 +65,16 @@ if (!trait_exists('AjaxTrait')) {
       $ci = &get_instance();
       $ci->output->set_status_header($code);
 
-      if ($this->log_ajax) {
-        log_message('DEBUG', "API call to " . current_url() . " failed (code $code):");
-        log_message('DEBUG', print_r($data, true));
-      }
-
       $data['success'] = 0;
       if (!isset($data['errors']) && (count($this->_ajax_errors) > 0)) {
         $data['errors'] = $this->_ajax_errors;
       }
+
+      if ($this->log_ajax) {
+        log_message('ERROR', "API call to " . current_url() . " failed (code $code):");
+        log_message('ERROR', print_r($data, true));
+      }
+
       $ci->output->set_output(json_encode($data, $json_encoding_options));
       $ci->output->_display();
       exit;
