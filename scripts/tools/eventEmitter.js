@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 // Make sure there is a tools object
 var tools = tools || {} // eslint-disable-line
 ;
@@ -8,11 +8,18 @@ var tools = tools || {} // eslint-disable-line
   /**
    * Register to get event notifications
    *
-   * @param {string} event Event to listen for. '*' to listen for all events.
+   * @param {mixed} event Event to listen for. '*' to listen for all events. Can also be an array of multiple events.
    * @param {*} listener
    * @param {*} context
    */
   function register(event, listener, context) {
+    var _this = this;
+    if (Array.isArray(event)) {
+      event.forEach(function (e) {
+        return _this.register(e, listener, context);
+      });
+      return;
+    }
     if (_typeof(this.events[event]) !== 'object') {
       this.events[event] = [];
     }
@@ -23,6 +30,13 @@ var tools = tools || {} // eslint-disable-line
     return this;
   }
   function unRegister(event, listener) {
+    var _this2 = this;
+    if (Array.isArray(event)) {
+      event.forEach(function (e) {
+        return _this2.unRegister(e, listener);
+      });
+      return;
+    }
     if (_typeof(this.events[event]) !== 'object') {
       return;
     }

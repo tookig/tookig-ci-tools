@@ -5,11 +5,15 @@ var tools = tools || {} // eslint-disable-line
   /**
    * Register to get event notifications
    *
-   * @param {string} event Event to listen for. '*' to listen for all events.
+   * @param {mixed} event Event to listen for. '*' to listen for all events. Can also be an array of multiple events.
    * @param {*} listener
    * @param {*} context
    */
   function register (event, listener, context) {
+    if (Array.isArray(event)) {
+      event.forEach(e => this.register(e, listener, context))
+      return
+    }
     if (typeof this.events[event] !== 'object') {
       this.events[event] = []
     }
@@ -21,6 +25,10 @@ var tools = tools || {} // eslint-disable-line
   }
 
   function unRegister (event, listener) {
+    if (Array.isArray(event)) {
+      event.forEach(e => this.unRegister(e, listener))
+      return
+    }
     if (typeof this.events[event] !== 'object') {
       return
     }
