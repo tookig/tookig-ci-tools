@@ -18,7 +18,7 @@ var tools = tools || {} // eslint-disable-line
       event.forEach(function (e) {
         return _this.register(e, listener, context);
       });
-      return;
+      return this;
     }
     if (_typeof(this.events[event]) !== 'object') {
       this.events[event] = [];

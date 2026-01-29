@@ -12,7 +12,7 @@ var tools = tools || {} // eslint-disable-line
   function register (event, listener, context) {
     if (Array.isArray(event)) {
       event.forEach(e => this.register(e, listener, context))
-      return
+      return this
     }
     if (typeof this.events[event] !== 'object') {
       this.events[event] = []
